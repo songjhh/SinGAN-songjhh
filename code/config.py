@@ -105,6 +105,6 @@ def post_config(opt):
     print("Random Seed: ", opt.manualSeed)
     random.seed(opt.manualSeed)
     torch.manual_seed(opt.manualSeed)
-    if torch.cuda.is_available() and opt.not_cuda:
-        print("WARNING: You have a CUDA device, so you should probably run with --cuda")
+    # if torch.cuda.is_available() and opt.not_cuda:
+    #     print("WARNING: You have a CUDA device, so you should probably run with --cuda")
     return opt
