@@ -26,8 +26,8 @@ if __name__ == "__main__":
 
     # 读取文件
     path = Path("/content/training-set")
-    for file_name in path.rglob("*.nc4"):
-        save_name = str(file_name)[-12:-4]
+    for training_file in path.rglob("*.nc4"):
+        save_name = str(training_file)[-12:-4]
         parser.set_defaults(input_name="%s" % (save_name))
         opt = parser.parse_args()
         opt = config.post_config(opt)
@@ -58,9 +58,9 @@ if __name__ == "__main__":
             opt.mode = mode
         else:
             print("%f" % pow(in_scale, iter_num))
-            print("*** Train SinGAN for SR from " + str(file_name) + "***")
+            print("*** Train SinGAN for SR from " + str(training_file) + "***")
 
-            dst = ncdataset(file_name)
+            dst = ncdataset(training_file)
             target = dst.variables["precipitationCal"]
             target = np.squeeze(target)
             maxsd = [np.max(target)]
