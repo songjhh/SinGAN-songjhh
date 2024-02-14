@@ -31,6 +31,7 @@ if __name__ == "__main__":
     path = Path("/content/testing-set")
     for testing_file in path.rglob("*.nc4"):
         saveop = str(testing_file)[-12:-4]
+        parser.set_defaults(input_name="%s" % (saveop))
         opt = parser.parse_args()
         opt = config.post_config(opt)
         Zs_sr = []
