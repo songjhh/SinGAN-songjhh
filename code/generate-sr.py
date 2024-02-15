@@ -23,10 +23,20 @@ if __name__ == "__main__":
     parser.set_defaults(alpha=30)
 
     opt = parser.parse_args()
-    Gs = torch.load(opt.model_dir + "/Gs.pth")
-    Zs = torch.load(opt.model_dir + "/Zs.pth")
-    reals = torch.load(opt.model_dir + "/reals.pth")
-    NoiseAmp = torch.load(opt.model_dir + "/NoiseAmp.pth")
+    if opt.not_cuda:
+        Gs = torch.load(opt.model_dir + "/Gs.pth", map_location=torch.device("cpu"))
+        Zs = torch.load(opt.model_dir + "/Zs.pth", map_location=torch.device("cpu"))
+        reals = torch.load(
+            opt.model_dir + "/reals.pth", map_location=torch.device("cpu")
+        )
+        NoiseAmp = torch.load(
+            opt.model_dir + "/NoiseAmp.pth", map_location=torch.device("cpu")
+        )
+    else:
+        Gs = torch.load(opt.model_dir + "/Gs.pth")
+        Zs = torch.load(opt.model_dir + "/Zs.pth")
+        reals = torch.load(opt.model_dir + "/reals.pth")
+        NoiseAmp = torch.load(opt.model_dir + "/NoiseAmp.pth")
 
     path = Path("/content/testing-set")
     for testing_file in path.rglob("*.nc4"):

@@ -90,7 +90,7 @@ def post_config(opt):
     opt.min_nfc_init = opt.min_nfc
     opt.scale_factor_init = opt.scale_factor
     opt.out_ = "TrainedModels/%s/scale_factor=%f/" % (
-        opt.input_name[:-4],
+        opt.input_name,
         opt.scale_factor,
     )
     if opt.mode == "SR":

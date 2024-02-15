@@ -7,6 +7,7 @@ import torch
 import math
 
 
+# 调整图像尺度以适应超分辨率任务
 def adjust_scales2image_SR(real_, maxs, opt):
     opt.min_size = 18
     opt.num_scales = (
@@ -276,6 +277,7 @@ def linear(x):
     return (x + 1) * ((-1 <= x) & (x < 0)) + (1 - x) * ((0 <= x) & (x <= 1))
 
 
+# 创建图像金字塔
 def creat_reals_pyramid(real, reals, maxs, opt):
     real = real[:, 0:3, :, :]
     for i in range(0, opt.stop_scale + 1, 1):

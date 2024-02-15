@@ -91,7 +91,7 @@ def SinGAN_generate(
                 if opt.mode == "train":
                     dir2save = "%s/RandomSamples/%s/gen_start_scale=%d" % (
                         opt.out,
-                        opt.input_name[:-4],
+                        opt.input_name,
                         gen_start_scale,
                     )
                 else:

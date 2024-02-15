@@ -12,10 +12,6 @@ import torch
 if __name__ == "__main__":
     # 处理配置
     parser = config.get_arguments()
-    # parser.add_argument("--input_dir", help="input image dir", default="Input/Images")
-    # parser.add_argument(
-    #     "--input_name", help="training image name", default="20190309"
-    # )
     parser.add_argument(
         "--sr_factor", help="super resolution factor", type=float, default=4
     )
