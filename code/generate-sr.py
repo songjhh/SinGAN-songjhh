@@ -40,8 +40,8 @@ if __name__ == "__main__":
 
     path = Path("/content/testing-set")
     for testing_file in path.rglob("*.nc4"):
-        saveop = str(testing_file)[-12:-4]
-        parser.set_defaults(input_name="%s" % (saveop))
+        save_name = str(testing_file)[-12:-4]
+        parser.set_defaults(input_name="%s" % (save_name))
         opt = parser.parse_args()
         opt = config.post_config(opt)
         Zs_sr = []
@@ -54,7 +54,6 @@ if __name__ == "__main__":
         in_scale, iter_num = functions.calc_init_scale(opt)
         opt.scale_factor = 1 / in_scale
         opt.scale_factor_init = 1 / in_scale
-        opt.mode = "train"
 
         dst = ncdataset(testing_file)
         target = dst.variables["precipitationCal"]
@@ -86,9 +85,9 @@ if __name__ == "__main__":
         inp = inp.numpy()
         inpp = inp * maxsd
         np.savetxt(
-            "/content/drive/MyDrive/code/SinGAN-songjhh/Results/%s.txt" % saveop, inpp
+            "/content/drive/MyDrive/code/SinGAN-songjhh/Results/%s.txt" % save_name, inpp
         )
         np.savetxt(
-            "/content/drive/MyDrive/code/SinGAN-songjhh/Original/%s.txt" % saveop,
+            "/content/drive/MyDrive/code/SinGAN-songjhh/Original/%s.txt" % save_name,
             target,
         )
