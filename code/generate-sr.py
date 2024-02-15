@@ -8,6 +8,8 @@ import torch.nn as nn
 from pathlib import Path
 from netCDF4 import Dataset as ncdataset
 import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 
 if __name__ == "__main__":
@@ -49,16 +51,28 @@ if __name__ == "__main__":
         NoiseAmp_sr = []
         Gs_sr = []
 
+        dst = ncdataset(testing_file)
+        target = dst.variables["precipitationCal"]
+        target = np.squeeze(target)
+        maxsd = [np.max(target)]
+
+        target_torch = torch.from_numpy(target)
+        target_torch = target_torch / np.max(target)
+        target_torch = functions.norm(target_torch)
+        target_torch = target_torch[None, None, :, :]
+
+        ud = size.mimresize(
+            target_torch, 1 / 4, maxsd, opt
+        )
+        real = size.adjust_scales2image_SR(ud, maxsd, opt)
+        real_ = real
+        reals = size.creat_reals_pyramid(real_, reals, maxsd, opt)
+
         real = reals[-1]  # read_image(opt)
         real_ = real
         in_scale, iter_num = functions.calc_init_scale(opt)
         opt.scale_factor = 1 / in_scale
         opt.scale_factor_init = 1 / in_scale
-
-        dst = ncdataset(testing_file)
-        target = dst.variables["precipitationCal"]
-        target = np.squeeze(target)
-        maxsd = [np.max(target)]
 
         for j in range(1, iter_num + 1, 1):
             real_ = size.mimresize(real_, pow(1 / opt.scale_factor, 1), maxsd, opt)
@@ -80,14 +94,41 @@ if __name__ == "__main__":
             0 : int(opt.sr_factor * reals[-1].shape[2]) - 1,
             0 : int(opt.sr_factor * reals[-1].shape[3]),
         ]
+
+        dir2save = functions.generate_dir2save(opt)
+        plt.imsave(
+            "%s/%s_HR.png" % (dir2save, opt.input_name),
+            functions.convert_image_np(out.detach()),
+            vmin=0,
+            vmax=1,
+        )
+
         outt = size.denorm(out)
         inp = outt[-1, -1, :, :].to(torch.device("cpu"))
         inp = inp.numpy()
         inpp = inp * maxsd
         np.savetxt(
-            "/content/drive/MyDrive/code/SinGAN-songjhh/Results/%s.txt" % save_name, inpp
+            "/content/drive/MyDrive/code/SinGAN-songjhh/Results/%s.txt" % save_name,
+            inpp,
         )
         np.savetxt(
             "/content/drive/MyDrive/code/SinGAN-songjhh/Original/%s.txt" % save_name,
             target,
         )
+
+        sns.set()
+        plt.close("all")
+        plt.figure(figsize=(10, 5))
+        ax = sns.heatmap(
+            inpp, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(target)
+        )
+        plt.title("Result from model")
+        plt.savefig("/content/pic/result-" + save_name + ".png")
+
+        sns.set()
+        plt.figure(figsize=(10, 5))
+        ax = sns.heatmap(
+            target, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(target)
+        )
+        plt.title("Original data")
+        plt.savefig("/content/pic/original-" + save_name + ".png")
