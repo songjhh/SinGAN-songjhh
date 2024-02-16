@@ -1,7 +1,7 @@
 import netCDF4 as nc
 
 # 打开 NetCDF 文件
-nc_file = nc.Dataset("SinGAN-songjhh/data/training-set/20190309.nc4", "r")
+nc_file = nc.Dataset("original-data/2020_1_x1", "r")
 # nc_file = nc.Dataset("./data_resampled_x1.nc", "r")
 
 # # 获取特定变量的维度
