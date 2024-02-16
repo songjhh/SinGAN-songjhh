@@ -65,7 +65,7 @@ if __name__ == "__main__":
             target_torch = functions.norm(target_torch)
             target_torch = target_torch[None, None, :, :]
             ud = size.mimresize(
-                target_torch, 1 / 4, maxsd, opt
+                target_torch, 1, maxsd, opt
             )  # 1/4 of original as input
             opt.min_size = 10
             opt.max_size = 700
