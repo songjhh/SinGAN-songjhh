@@ -4,8 +4,8 @@ import os
 
 
 root_dir = "SinGAN-songjhh/original-data/2020_1"
-x1_dir = "SinGAN-songjhh/original-data/2020_1_x1/"
-x4_dir = "SinGAN-songjhh/original-data/2020_1_x4/"
+x1_dir = "SinGAN-songjhh/original-data/2020_1_x1_test/"
+x4_dir = "SinGAN-songjhh/original-data/2020_1_x4_test/"
 for root, dirs, files in os.walk(root_dir):
     for file in files:
         ds = xr.open_dataset(os.path.join(root, file))
@@ -18,12 +18,12 @@ for root, dirs, files in os.walk(root_dir):
         new_file_name = file[21:end_index] + ".nc4"
 
         ds_resampled_x1 = ds_subset.interp(
-            lat=da.arange(20, 40, 0.1), lon=da.arange(100, 120, 0.1)
+            lat=da.arange(20, 32, 0.1), lon=da.arange(106, 118, 0.1)
         )
         ds_resampled_x1.to_netcdf(x1_dir + new_file_name)
 
         ds_resampled_x4 = ds_subset.interp(
-            lat=da.arange(20, 40, 0.4), lon=da.arange(100, 120, 0.4)
+            lat=da.arange(20, 32, 0.4), lon=da.arange(106, 118, 0.4)
         )
         ds_resampled_x4.to_netcdf(x4_dir + new_file_name)
 
