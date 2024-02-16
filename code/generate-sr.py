@@ -50,9 +50,10 @@ if __name__ == "__main__":
         reals_sr = []
         NoiseAmp_sr = []
         Gs_sr = []
+        reals = []
 
         dst = ncdataset(testing_file)
-        target = dst.variables["precipitationCal"]
+        target = dst.variables["precipitation"]
         target = np.squeeze(target)
         maxsd = [np.max(target)]
 
@@ -62,12 +63,12 @@ if __name__ == "__main__":
         target_torch = target_torch[None, None, :, :]
 
         ud = size.mimresize(
-            target_torch, 1 / 4, maxsd, opt
+            target_torch, 1, maxsd, opt
         )
+        #reals = []
         real = size.adjust_scales2image_SR(ud, maxsd, opt)
         real_ = real
         reals = size.creat_reals_pyramid(real_, reals, maxsd, opt)
-
         real = reals[-1]  # read_image(opt)
         real_ = real
         in_scale, iter_num = functions.calc_init_scale(opt)
@@ -118,17 +119,21 @@ if __name__ == "__main__":
 
         sns.set()
         plt.close("all")
-        plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(14, 12))
         ax = sns.heatmap(
             inpp, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(target)
         )
+        print(len(inpp))
+        print(len(inpp[0]))
         plt.title("Result from model")
         plt.savefig("/content/pic/result-" + save_name + ".png")
 
         sns.set()
-        plt.figure(figsize=(10, 5))
+        plt.figure(figsize=(14, 12))
         ax = sns.heatmap(
             target, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(target)
         )
+        print(len(target))
+        print(len(target[0]))
         plt.title("Original data")
         plt.savefig("/content/pic/original-" + save_name + ".png")

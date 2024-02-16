@@ -57,7 +57,7 @@ if __name__ == "__main__":
             print("*** Train SinGAN for SR from " + str(training_file) + "***")
 
             dst = ncdataset(training_file)
-            target = dst.variables["precipitationCal"]
+            target = dst.variables["precipitation"]
             target = np.squeeze(target)
             maxsd = [np.max(target)]
             target_torch = torch.from_numpy(target)
