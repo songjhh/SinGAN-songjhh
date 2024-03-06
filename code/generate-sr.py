@@ -46,11 +46,11 @@ if __name__ == "__main__":
     )
     # saveData = "/content/drive/MyDrive/code/SinGAN-songjhh"
     saveData = (
-        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp2"
+        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp3"
     )
     # savePic = "/content"
     savePic = (
-        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp2"
+        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp3"
     )
     compareSet = "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/data/compare-set"
     for testing_file in path.rglob("*.nc4"):
@@ -69,8 +69,8 @@ if __name__ == "__main__":
         target = np.squeeze(target)
         maxsd = [np.max(target)]
 
-        compare = ncdataset(compareSet + "/%s.nc4" % (save_name)).variables["precipitation"]
-        compare = np.squeeze(compare)
+        # compare = ncdataset(compareSet + "/%s.nc4" % (save_name)).variables["precipitation"]
+        # compare = np.squeeze(compare)
 
         target_torch = torch.from_numpy(target)
         target_torch = target_torch / np.max(target)
@@ -79,14 +79,14 @@ if __name__ == "__main__":
 
         ud = size.mimresize(target_torch, 1 / 4, maxsd, opt)
 
-        ttt = size.mimresize_in(compare, scale_factor=1/4)
-        sns.set()
-        plt.figure(figsize=(14, 12))
-        ax = sns.heatmap(
-            ttt, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(ttt)
-        )
-        plt.title("ud data")
-        plt.savefig(savePic + "/pic/ud-" + save_name + ".png")
+        # ttt = size.mimresize_in(compare, scale_factor=1/4)
+        # sns.set()
+        # plt.figure(figsize=(14, 12))
+        # ax = sns.heatmap(
+        #     ttt, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(ttt)
+        # )
+        # plt.title("ud data")
+        # plt.savefig(savePic + "/pic/ud-" + save_name + ".png")
 
         # reals = []
         real = size.adjust_scales2image_SR(ud, maxsd, opt)
@@ -145,10 +145,10 @@ if __name__ == "__main__":
             saveData + "/Original/%s.txt" % save_name,
             target,
         )
-        np.savetxt(
-            saveData + "/Compare/%s.txt" % save_name,
-            compare,
-        )
+        # np.savetxt(
+        #     saveData + "/Compare/%s.txt" % save_name,
+        #     compare,
+        # )
 
         sns.set()
         plt.close("all")
@@ -171,14 +171,14 @@ if __name__ == "__main__":
         plt.title("Original data")
         plt.savefig(savePic + "/pic/original-" + save_name + ".png")
 
-        sns.set()
-        plt.figure(figsize=(14, 12))
-        ax = sns.heatmap(
-            compare, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(compare)
-        )
-        print(len(compare))
-        print(len(compare[0]))
-        plt.title("Compare data")
-        plt.savefig(savePic + "/pic/compare-" + save_name + ".png")
+        # sns.set()
+        # plt.figure(figsize=(14, 12))
+        # ax = sns.heatmap(
+        #     compare, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(compare)
+        # )
+        # print(len(compare))
+        # print(len(compare[0]))
+        # plt.title("Compare data")
+        # plt.savefig(savePic + "/pic/compare-" + save_name + ".png")
 
 
