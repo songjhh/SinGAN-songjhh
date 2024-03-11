@@ -20,16 +20,18 @@ for root, dirs, files in os.walk(root_dir):
         ds_resampled_x1 = ds_subset.interp(
             lat=da.arange(20, 32, 0.1), lon=da.arange(106, 118, 0.1)
         )
-        ds_resampled_x1.to_netcdf(x1_dir + new_file_name)
-        print(len(ds_resampled_x1.lat))
-        print(len(ds_resampled_x1.lon))
+        print(ds_resampled_x1)
+        break
+        # ds_resampled_x1.to_netcdf(x1_dir + new_file_name)
+        # print(len(ds_resampled_x1.lat))
+        # print(len(ds_resampled_x1.lon))
 
-        ds_resampled_x4 = ds_subset.interp(
-            lat=da.arange(20, 32, 0.4), lon=da.arange(106, 118, 0.4)
-        )
-        ds_resampled_x4.to_netcdf(x4_dir + new_file_name)
-        print(len(ds_resampled_x4.lat))
-        print(len(ds_resampled_x4.lon))
+        # ds_resampled_x4 = ds_subset.interp(
+        #     lat=da.arange(20, 32, 0.4), lon=da.arange(106, 118, 0.4)
+        # )
+        # ds_resampled_x4.to_netcdf(x4_dir + new_file_name)
+        # print(len(ds_resampled_x4.lat))
+        # print(len(ds_resampled_x4.lon))
 
 
 # ds_x1 = xr.open_dataset(x1_dir + "20200130.nc4")

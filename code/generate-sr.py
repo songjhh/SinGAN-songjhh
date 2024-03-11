@@ -42,19 +42,20 @@ if __name__ == "__main__":
 
     # path = Path("/content/testing-set")
     path = Path(
-        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/data/testing-set"
+        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/original-data/2020_month_x1"
     )
     # saveData = "/content/drive/MyDrive/code/SinGAN-songjhh"
     saveData = (
-        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp3"
+        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp"
     )
     # savePic = "/content"
     savePic = (
-        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp3"
+        "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/analyse/temp"
     )
-    compareSet = "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/data/compare-set"
+    # compareSet = "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/data/compare-set"
     for testing_file in path.rglob("*.nc4"):
-        save_name = str(testing_file)[-12:-4]
+        # save_name = str(testing_file)[-12:-4]
+        save_name = str(testing_file)[-10:-4]
         parser.set_defaults(input_name="%s" % (save_name))
         opt = parser.parse_args()
         opt = config.post_config(opt)
@@ -180,5 +181,3 @@ if __name__ == "__main__":
         # print(len(compare[0]))
         # plt.title("Compare data")
         # plt.savefig(savePic + "/pic/compare-" + save_name + ".png")
-
-
