@@ -80,14 +80,24 @@ if __name__ == "__main__":
 
         ud = size.mimresize(target_torch, 1 / 4, maxsd, opt)
 
-        # ttt = size.mimresize_in(compare, scale_factor=1/4)
-        # sns.set()
-        # plt.figure(figsize=(14, 12))
-        # ax = sns.heatmap(
-        #     ttt, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(ttt)
-        # )
-        # plt.title("ud data")
-        # plt.savefig(savePic + "/pic/ud-" + save_name + ".png")
+        resampled = size.mimresize_in(target, scale_factor=1 / 4)
+        sns.set()
+        plt.figure(figsize=(32, 12))
+        ax = sns.heatmap(
+            resampled,
+            vmin=0,
+            yticklabels=False,
+            xticklabels=False,
+            vmax=np.max(resampled),
+        )
+        plt.title("resampled data")
+        plt.savefig(savePic + "/pic/resampled-" + save_name + ".png")
+        print(len(resampled))
+        print(len(resampled[0]))
+        np.savetxt(
+            saveData + "/Resampled/%s.txt" % save_name,
+            resampled,
+        )
 
         # reals = []
         real = size.adjust_scales2image_SR(ud, maxsd, opt)
@@ -153,22 +163,22 @@ if __name__ == "__main__":
 
         sns.set()
         plt.close("all")
-        plt.figure(figsize=(14, 12))
+        plt.figure(figsize=(32, 12))
         ax = sns.heatmap(
             inpp, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(inpp)
         )
-        print(len(inpp))
-        print(len(inpp[0]))
+        # print(len(inpp))
+        # print(len(inpp[0]))
         plt.title("Result from model")
         plt.savefig(savePic + "/pic/result-" + save_name + ".png")
 
         sns.set()
-        plt.figure(figsize=(14, 12))
+        plt.figure(figsize=(32, 12))
         ax = sns.heatmap(
             target, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(target)
         )
-        print(len(target))
-        print(len(target[0]))
+        # print(len(target))
+        # print(len(target[0]))
         plt.title("Original data")
         plt.savefig(savePic + "/pic/original-" + save_name + ".png")
 

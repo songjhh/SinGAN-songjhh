@@ -1,7 +1,16 @@
 import netCDF4 as nc
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
 
 # 打开 NetCDF 文件
-nc_file = nc.Dataset("original-data/2020_1_x1", "r")
+nc_file = nc.Dataset(
+    # "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/original-data/2020_month_x4/202001.nc4",
+    "/Users/jianghouhong/code/songjhh/depth-learning/SinGAN-songjhh/test/3B-MO.MS.MRG.3IMERG.20200101-S000000-E235959.01.V07B.HDF5.nc4",
+    "r",
+)
+precip_var = nc_file.variables["precipitation"]
+print(precip_var.name, precip_var.units)
 # nc_file = nc.Dataset("./data_resampled_x1.nc", "r")
 
 # # 获取特定变量的维度
@@ -23,18 +32,29 @@ nc_file = nc.Dataset("original-data/2020_1_x1", "r")
 # print("Variables in the file:", nc_file.variables.keys())
 
 # 获取经度、纬度和降水数据的变量
-lon_var = nc_file.variables["lon"]
-lat_var = nc_file.variables["lat"]
-precip_var = nc_file.variables["precipitationCal"]
-time_var = nc_file.variables["time"]
+# lon_var = nc_file.variables["lon"]
+# lat_var = nc_file.variables["lat"]
+# precip_var = np.squeeze(precip_var)
 
-print(precip_var.lon)
+# np.savetxt(
+#     "./tttt.txt",
+#     precip_var,
+# )
+# sns.set()
+# plt.close("all")
+# plt.figure(figsize=(32, 12))
+# ax = sns.heatmap(precip_var, vmin=0, yticklabels=False, xticklabels=False, vmax=np.max(precip_var))
+# plt.title("model")
+# plt.savefig("./ttt.png")
+# time_var = nc_file.variables["time"]
+
+# print(precip_var[0])
 
 # 获取经度和纬度范围
-lon_min = lon_var[:].min()
-lon_max = lon_var[:].max()
-lat_min = lat_var[:].min()
-lat_max = lat_var[:].max()
+# lon_min = lon_var[:].min()
+# lon_max = lon_var[:].max()
+# lat_min = lat_var[:].min()
+# lat_max = lat_var[:].max()
 # print("Longitude range:", lon_min, lon_max)
 # print("Latitude range:", lat_min, lat_max)
 
