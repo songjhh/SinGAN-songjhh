@@ -10,7 +10,7 @@ nc_file = nc.Dataset(
     "r",
 )
 precip_var = nc_file.variables["precipitation"]
-print(precip_var.name, precip_var.units)
+print(precip_var["time"])
 # nc_file = nc.Dataset("./data_resampled_x1.nc", "r")
 
 # # 获取特定变量的维度
